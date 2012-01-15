@@ -1,19 +1,19 @@
 b'
 bu
-cà
-càit
-càite
+cÃ 
+cÃ it
+cÃ ite
 carson
 ciamar
 cionnas
-có
-cò
+cÃ³
+cÃ²
 cuin
 cuine
 deachas
-dèan
-dèanar
-dèantar
+dÃ¨an
+dÃ¨anar
+dÃ¨antar
 doirear
 fa
 far
@@ -27,7 +27,7 @@ foidhe
 foidhpe
 fon
 fo'n
-fòs
+fÃ²s
 'ga
 'gad
 'gam
@@ -72,4 +72,3 @@ tromhad
 tromhaibh
 tromhainn
 tromham
-
