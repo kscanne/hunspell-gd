@@ -14,6 +14,12 @@ dist: FORCE
 glan.txt: gd_GB.dic gd_GB.aff unmunch.sh
 	bash unmunch.sh gd_GB.dic gd_GB.aff | LC_ALL=C sort -u > $@
 
+adaptxt-gd.zip: gd_inclusion.txt gd_corpus.txt
+	zip $@ gd_inclusion.txt gd_corpus.txt
+
+gd_inclusion.txt gd_corpus.txt: glan.txt toadaptxt.pl
+	perl toadaptxt.pl gd glan.txt gd-freq.txt
+
 gd_GB.zip gd-GB-dictionary.xpi: gd_GB.dic
 	sed -i "/^This is version.*of hunspell-gd/s/.*/This is version $(VERSION) of hunspell-gd./" README_gd_GB.txt
 	$(MAKESCRIPT) gd_GB 'Scottish Gaelic' 'Scotland' $(VERSION) 'An dearbhair-litreachaidh beag airson Mozilla'
@@ -109,6 +115,6 @@ gd_GB-afb-and-dwelly.dic : all.txt withflags.txt dwelly-aff.txt grave-all.txt gr
 
 
 clean:
-	rm -f all.txt withflags.txt grave-all.txt grave-withflags.txt dwelly.txt dwelly-aff.txt withflags-justheads.txt missing*.txt gd_GB.dic *.xpi *.oxt *.zip all-old.txt glan.txt gd_GB-scrabble.aff scrabble*.txt gd_GB-dwelly.dic gd_GB-afb.dic scrab-afb-stats.txt adjectives.txt masc.txt fem.txt verb.txt
+	rm -f all.txt withflags.txt grave-all.txt grave-withflags.txt dwelly.txt dwelly-aff.txt withflags-justheads.txt missing*.txt gd_GB.dic *.xpi *.oxt *.zip all-old.txt glan.txt gd_GB-scrabble.aff scrabble*.txt gd_GB-dwelly.dic gd_GB-afb.dic scrab-afb-stats.txt adjectives.txt masc.txt fem.txt verb.txt gd_inclusion.txt gd_corpus.txt
 
 FORCE:
