@@ -47,7 +47,7 @@ while (<FREQ>) {
 }
 close FREQ;
 
-open(INCLUSION, ">:utf8", "$ARGV[0]_inclusion.txt") or die "Could not open inclusion file: $!";
+open(INCLUSION, ">:utf8", "$ARGV[0]_inclusion-utf8.txt") or die "Could not open inclusion file: $!";
 my $count = 0;
 for my $k (sort keys %freq) {
 	last if ($count >= 100000);
@@ -56,7 +56,7 @@ for my $k (sort keys %freq) {
 }
 close INCLUSION;
 
-open(CORPUS, ">:utf8", "$ARGV[0]_corpus.txt") or die "Could not open corpus file: $!";
+open(CORPUS, ">:utf8", "$ARGV[0]_corpus-utf8.txt") or die "Could not open corpus file: $!";
 $count = 0;
 for my $k (sort keys %freq) {
 	last if ($count >= 100000);

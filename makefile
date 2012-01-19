@@ -17,7 +17,13 @@ glan.txt: gd_GB.dic gd_GB.aff unmunch.sh
 adaptxt-gd.zip: gd_inclusion.txt gd_corpus.txt
 	zip $@ gd_inclusion.txt gd_corpus.txt
 
-gd_inclusion.txt gd_corpus.txt: glan.txt toadaptxt.pl
+gd_corpus.txt: gd_corpus-utf8.txt
+	iconv -f UTF-8 -t UCS-2LE gd_corpus-utf8.txt > $@
+
+gd_inclusion.txt: gd_inclusion-utf8.txt
+	iconv -f UTF-8 -t UCS-2LE gd_inclusion-utf8.txt > $@
+
+gd_inclusion-utf8.txt gd_corpus-utf8.txt: glan.txt toadaptxt.pl
 	perl toadaptxt.pl gd glan.txt gd-freq.txt
 
 gd_GB.zip gd-GB-dictionary.xpi: gd_GB.dic
@@ -115,6 +121,6 @@ gd_GB-afb-and-dwelly.dic : all.txt withflags.txt dwelly-aff.txt grave-all.txt gr
 
 
 clean:
-	rm -f all.txt withflags.txt grave-all.txt grave-withflags.txt dwelly.txt dwelly-aff.txt withflags-justheads.txt missing*.txt gd_GB.dic *.xpi *.oxt *.zip all-old.txt glan.txt gd_GB-scrabble.aff scrabble*.txt gd_GB-dwelly.dic gd_GB-afb.dic scrab-afb-stats.txt adjectives.txt masc.txt fem.txt verb.txt gd_inclusion.txt gd_corpus.txt
+	rm -f all.txt withflags.txt grave-all.txt grave-withflags.txt dwelly.txt dwelly-aff.txt withflags-justheads.txt missing*.txt gd_GB.dic *.xpi *.oxt *.zip all-old.txt glan.txt gd_GB-scrabble.aff scrabble*.txt gd_GB-dwelly.dic gd_GB-afb.dic scrab-afb-stats.txt adjectives.txt masc.txt fem.txt verb.txt gd_inclusion.txt gd_corpus.txt gd_inclusion-utf8.txt gd_corpus-utf8.txt
 
 FORCE:
