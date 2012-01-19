@@ -1,7 +1,6 @@
 # spell checker version
 VERSION=2.1
-#MAKESCRIPT=${HOME}/seal/make-extensions/make-extensions
-MAKESCRIPT=${HOME}/Dearbhair/make-extensions
+MAKESCRIPT=../make-extensions/make-extensions
 SOURCE=Entries.csv
 
 all: gd_GB.zip glan.txt scrabble.zip
