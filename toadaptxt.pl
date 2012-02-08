@@ -20,6 +20,8 @@ while (<DICT>) {
 }
 close DICT;
 
+my $count = 0;
+my $cutoff = 0;
 my %freq;
 open(FREQ, "<:utf8", $ARGV[2]) or die "Could not open frequency list: $!";
 while (<FREQ>) {
@@ -43,13 +45,19 @@ while (<FREQ>) {
 	}
 	else {
 		$freq{$w} = $c;
+		$count++;
+		if ($count == 100000) {
+			print STDERR "Cutoff set to $c\n";
+			$cutoff = $c;
+		}
 	}
 }
 close FREQ;
 
 open(INCLUSION, ">:utf8", "$ARGV[0]_inclusion-utf8.txt") or die "Could not open inclusion file: $!";
-my $count = 0;
+$count = 0;
 for my $k (sort keys %freq) {
+	next if ($freq{$k} <= $cutoff);
 	last if ($count >= 100000);
 	print INCLUSION "$k\n";
 	$count++;
@@ -59,6 +67,7 @@ close INCLUSION;
 open(CORPUS, ">:utf8", "$ARGV[0]_corpus-utf8.txt") or die "Could not open corpus file: $!";
 $count = 0;
 for my $k (sort keys %freq) {
+	next if ($freq{$k} <= $cutoff);
 	last if ($count >= 100000);
 	my $num = $freq{$k};
 	for (1..$num) {
