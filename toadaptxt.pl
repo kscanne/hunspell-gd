@@ -27,7 +27,8 @@ open(FREQ, "<:utf8", $ARGV[2]) or die "Could not open frequency list: $!";
 while (<FREQ>) {
 	chomp;
 	(my $c, my $w) = /^ *([0-9]+) (.+)$/;
-	next if ($w =~ /^.-/);
+	next if ($w =~ /^.['-]/); # handled by so-called "elision rules"
+	next if ($w =~ /[.]/);
 	my $lowered = lcfirst($w);
 	if (exists($dict{$lowered})) {
 		$w = $lowered;
@@ -58,6 +59,7 @@ open(INCLUSION, ">:utf8", "$ARGV[0]_inclusion-utf8.txt") or die "Could not open 
 $count = 0;
 for my $k (sort keys %freq) {
 	next if ($freq{$k} <= $cutoff);
+	next if ($k =~ / /);
 	last if ($count >= 100000);
 	print INCLUSION "$k\n";
 	$count++;
@@ -71,7 +73,7 @@ for my $k (sort keys %freq) {
 	last if ($count >= 100000);
 	my $num = $freq{$k};
 	for (1..$num) {
-		print CORPUS "$k\n";
+		print CORPUS "$k ,\n";
 	}
 	$count++;
 }
