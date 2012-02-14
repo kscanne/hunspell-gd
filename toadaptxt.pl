@@ -27,7 +27,8 @@ open(FREQ, "<:utf8", $ARGV[2]) or die "Could not open frequency list: $!";
 while (<FREQ>) {
 	chomp;
 	(my $c, my $w) = /^ *([0-9]+) (.+)$/;
-	next if ($w =~ /^.['-]/); # handled by so-called "elision rules"
+	next if ($w =~ /^.-/); # handled by so-called "elision rules"
+	next if ($w =~ /^.'[aeiouáéíóúAEIOUÁÉÍÓÚ]/);
 	next if ($w =~ /[.]/);
 	my $lowered = lcfirst($w);
 	if (exists($dict{$lowered})) {
