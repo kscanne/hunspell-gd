@@ -12,6 +12,7 @@ if ($#ARGV != 2) {
 	die "Usage: perl toadaptxt.pl xx WORDLIST FREQLIST";
 }
 
+my $max = 100000;
 my %dict;
 open(DICT, "<:utf8", $ARGV[1]) or die "Could not open clean word list: $!";
 while (<DICT>) {
@@ -48,7 +49,7 @@ while (<FREQ>) {
 	else {
 		$freq{$w} = $c;
 		$count++;
-		if ($count == 100000) {
+		if ($count == $max) {
 			print STDERR "Cutoff set to $c\n";
 			$cutoff = $c;
 		}
@@ -61,7 +62,7 @@ $count = 0;
 for my $k (sort keys %freq) {
 	next if ($freq{$k} <= $cutoff);
 	next if ($k =~ / /);
-	last if ($count >= 100000);
+	last if ($count >= $max);
 	print INCLUSION "$k\n";
 	$count++;
 }
@@ -71,7 +72,7 @@ open(CORPUS, ">:utf8", "$ARGV[0]_corpus-utf8.txt") or die "Could not open corpus
 $count = 0;
 for my $k (sort keys %freq) {
 	next if ($freq{$k} <= $cutoff);
-	last if ($count >= 100000);
+	last if ($count >= $max);
 	my $num = $freq{$k};
 	for (1..$num) {
 		print CORPUS "$k ,\n";
