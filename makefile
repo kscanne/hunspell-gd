@@ -22,7 +22,7 @@ gd_corpus.txt: gd_corpus-utf8.txt
 gd_inclusion.txt: gd_inclusion-utf8.txt
 	iconv -f UTF-8 -t UCS-2LE gd_inclusion-utf8.txt > $@
 
-gd_inclusion-utf8.txt gd_corpus-utf8.txt: glan.txt toadaptxt.pl
+gd_inclusion-utf8.txt gd_corpus-utf8.txt: glan.txt toadaptxt.pl gd-freq.txt
 	perl toadaptxt.pl gd glan.txt gd-freq.txt
 
 gd_GB.zip gd-GB-dictionary.xpi: gd_GB.dic
