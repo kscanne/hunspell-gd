@@ -29,14 +29,22 @@ gd_GB.zip gd-GB-dictionary.xpi: gd_GB.dic
 	sed -i "/^This is version.*of hunspell-gd/s/.*/This is version $(VERSION) of hunspell-gd./" README_gd_GB.txt
 	$(MAKESCRIPT) gd_GB 'Scottish Gaelic' 'Scotland' $(VERSION) 'An dearbhair-litreachaidh beag airson Mozilla'
 
+clann-scrabble.txt: clann.txt striplist.txt
+	LC_ALL=C sort -u clann.txt | keepif -n striplist.txt > $@
+
 gd_GB-scrabble.aff: gd_GB.aff
 	cat gd_GB.aff | sed '/^SFX K.*igin/s/^/#/' | sed '/^SFX K Y/s/6/4/' > $@
 
-scrabble-afb.txt: gd_GB.dic gd_GB-scrabble.aff unmunch.sh
-	bash unmunch.sh gd_GB.dic gd_GB-scrabble.aff | LC_ALL=C sort -u | egrep -v '[A-ZÀÈÌÒÙÁÉÓ]' | egrep -v "[^a-il-prstuáéíóúàèìòù]" | egrep '..' | egrep -v 'ê' | tr "áéíóú" "àèìòù" | keepif -n striplist.txt | LC_ALL=C sort -u > $@
+glan-scrabble.txt: gd_GB.dic gd_GB-scrabble.aff unmunch.sh clann-scrabble.txt striplist.txt
+	bash unmunch.sh gd_GB.dic gd_GB-scrabble.aff | keepif -n striplist.txt | keepif -n clann-scrabble.txt | LC_ALL=C sort -u > $@
 
-scrabble.txt: scrabble-afb.txt
-	LC_ALL=C sort -u scrabble-afb.txt > $@
+# dwelly.txt comes from ~/seal/idirlamha/gd/dwelly
+dwelly-scrabble.txt: dwelly.txt clann-scrabble.txt glan-scrabble.txt striplist.txt
+	cat dwelly.txt | keepif -n striplist.txt | keepif -n clann-scrabble.txt | keepif -n glan-scrabble.txt > $@
+
+# much smaller than glan.txt just because of no hyphens
+scrabble.txt: clann-scrabble.txt glan-scrabble.txt dwelly-scrabble.txt
+	(cat clann-scrabble.txt; cat glan-scrabble.txt | sed 's/$$/=;1/'; cat dwelly-scrabble.txt | sed 's/$$/=;2/') | egrep -v '[A-ZÀÈÌÒÙÁÉÓ]' | egrep -v "[^a-il-prstuáéíóúàèìòù=;12]" | egrep '..' | egrep -v '^.=;' | egrep -v 'ê' | tr "áéíóú" "àèìòù" | tr 'a-zàèìòù' 'A-ZÀÈÌÒÙ' | egrep -v '[^BCDFGMPST]H' | sed 's/BH/Ḃ/g; s/CH/Ċ/g; s/DH/Ḋ/g; s/FH/Ḟ/g; s/GH/Ġ/g; s/MH/Ṁ/g; s/PH/Ṗ/g; s/SH/Ṡ/g; s/TH/Ṫ/g' | LC_ALL=C sort -u > $@
 
 scrabble.zip: scrabble.txt
 	zip $@ scrabble.txt
@@ -120,6 +128,6 @@ gd_GB-afb-and-dwelly.dic : all.txt withflags.txt dwelly-aff.txt grave-all.txt gr
 
 
 clean:
-	rm -f all.txt withflags.txt grave-all.txt grave-withflags.txt dwelly.txt dwelly-aff.txt withflags-justheads.txt missing*.txt gd_GB.dic *.xpi *.oxt *.zip all-old.txt glan.txt gd_GB-scrabble.aff scrabble*.txt gd_GB-dwelly.dic gd_GB-afb.dic scrab-afb-stats.txt adjectives.txt masc.txt fem.txt verb.txt gd_inclusion.txt gd_corpus.txt gd_inclusion-utf8.txt gd_corpus-utf8.txt
+	rm -f all.txt withflags.txt grave-all.txt grave-withflags.txt dwelly.txt dwelly-aff.txt withflags-justheads.txt missing*.txt gd_GB.dic *.xpi *.oxt *.zip all-old.txt glan.txt gd_GB-dwelly.dic gd_GB-afb.dic scrab-afb-stats.txt adjectives.txt masc.txt fem.txt verb.txt gd_inclusion.txt gd_corpus.txt gd_inclusion-utf8.txt gd_corpus-utf8.txt clann-scrabble.txt gd_GB-scrabble.aff glan-scrabble.txt dwelly-scrabble.txt scrabble.txt scrabble.zip
 
 FORCE:
