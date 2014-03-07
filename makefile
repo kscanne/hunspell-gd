@@ -128,6 +128,6 @@ gd_GB-afb-and-dwelly.dic : all.txt withflags.txt dwelly-aff.txt grave-all.txt gr
 
 
 clean:
-	rm -f all.txt withflags.txt grave-all.txt grave-withflags.txt dwelly.txt dwelly-aff.txt withflags-justheads.txt missing*.txt gd_GB.dic *.xpi *.oxt *.zip all-old.txt glan.txt gd_GB-dwelly.dic gd_GB-afb.dic scrab-afb-stats.txt adjectives.txt masc.txt fem.txt verb.txt gd_inclusion.txt gd_corpus.txt gd_inclusion-utf8.txt gd_corpus-utf8.txt clann-scrabble.txt gd_GB-scrabble.aff glan-scrabble.txt dwelly-scrabble.txt scrabble.txt scrabble.zip
+	rm -f all.txt withflags.txt grave-all.txt grave-withflags.txt dwelly-aff.txt withflags-justheads.txt missing*.txt gd_GB.dic *.xpi *.oxt *.zip all-old.txt glan.txt gd_GB-dwelly.dic gd_GB-afb.dic scrab-afb-stats.txt adjectives.txt masc.txt fem.txt verb.txt gd_inclusion.txt gd_corpus.txt gd_inclusion-utf8.txt gd_corpus-utf8.txt clann-scrabble.txt gd_GB-scrabble.aff glan-scrabble.txt dwelly-scrabble.txt scrabble.txt scrabble.zip
 
 FORCE:
