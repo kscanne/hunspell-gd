@@ -8,10 +8,12 @@ binmode STDIN, ":utf8";
 binmode STDOUT, ":utf8";
 binmode STDERR, ":utf8";
 
+# Both WORDLIST and FREQLIST should have words, bigrams, trigrams, etc.
 if ($#ARGV != 2) {
 	die "Usage: perl toadaptxt.pl xx WORDLIST FREQLIST";
 }
 
+# don't include more than this number of words/phrases in inclusion file
 my $max = 100000;
 my %dict;
 open(DICT, "<:utf8", $ARGV[1]) or die "Could not open clean word list: $!";
@@ -22,6 +24,8 @@ while (<DICT>) {
 close DICT;
 
 my $count = 0;
+# don't include words with freq lower than cutoff (so 0 == no effect)
+# it's set automatically in loop below...
 my $cutoff = 0;
 my %freq;
 open(FREQ, "<:utf8", $ARGV[2]) or die "Could not open frequency list: $!";
