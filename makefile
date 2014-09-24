@@ -1,5 +1,5 @@
 # spell checker version
-VERSION=2.1
+VERSION=3.0
 MAKESCRIPT=../make-extensions/make-extensions
 SOURCE=Entries.csv
 
@@ -27,7 +27,7 @@ gd_inclusion-utf8.txt gd_corpus-utf8.txt: glan.txt toadaptxt.pl gd-freq.txt
 
 gd_GB.zip gd-GB-dictionary.xpi: gd_GB.dic
 	sed -i "/^This is version.*of hunspell-gd/s/.*/This is version $(VERSION) of hunspell-gd./" README_gd_GB.txt
-	$(MAKESCRIPT) gd_GB 'Scottish Gaelic' 'Scotland' $(VERSION) 'An dearbhair-litreachaidh beag airson Mozilla'
+	$(MAKESCRIPT) gd_GB 'Scottish Gaelic' 'Scotland' $(VERSION) 'An Dearbhair-litreachaidh Beag'
 
 clann-scrabble.txt: clann.txt striplist.txt
 	LC_ALL=C sort -u clann.txt | keepif -n striplist.txt > $@
