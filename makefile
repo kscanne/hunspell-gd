@@ -1,5 +1,5 @@
 # spell checker version
-VERSION=3.0
+VERSION=3.2
 MAKESCRIPT=../make-extensions/make-extensions
 SOURCE=Entries.csv
 
