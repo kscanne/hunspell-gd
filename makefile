@@ -73,6 +73,9 @@ fem.txt : $(SOURCE)
 verb.txt : $(SOURCE)
 	cat $(SOURCE) | egrep -v '^#' | tr -d '\015' | egrep '^[0-9]+,"' | egrep ',Verb' | sed 's/^[^,]*,"//' | sed 's/",Verb.*//' | egrep '^[^ ][^ ]+,' > $@
 
+names.txt: $(SOURCE)
+	cat $(SOURCE) | egrep -v '^#' | tr -d '\015' | egrep '^[0-9]+,"' | egrep ',(Feminine|Masculine) Names' | sed 's/^[^,]*,"//' | sed 's/",\(Feminine\|Masculine\) Names.*//' | egrep '^[^ ][^ ]+,' > $@
+
 # headwords from AFB with POS-appropriate affix flags added
 # special cases at end are adjectives that can take t-; MB email 11 Aug 2010
 # then we might add /T more selectively, like this:
@@ -80,12 +83,13 @@ verb.txt : $(SOURCE)
 #  No need to add /S flags explicitly since AFB includes lenited forms among inflections; we'll get those in all.txt
 # email 27 Nov 2011; don't add any flags to verbs...
 # cat verb.txt | sed '/^[aeiouAEIOUàèìòùÀÈÌÒÙáéíóúÁÉÍÓÚ]/s/,.*/\/EHK/' | sed '/^[Ff]/s/,.*/\/EK/' | sed '/,/s/,.*/\/K/' >> $@
-withflags.txt : adjectives.txt masc.txt fem.txt verb.txt
+withflags.txt : adjectives.txt masc.txt fem.txt verb.txt names.txt
 	cat masc.txt | sed '/^[aeiouAEIOUàèìòùÀÈÌÒÙáéíóúÁÉÍÓÚ]/s/,.*/\/EHKNT/' | sed '/^[Ff]/s/,.*/\/EK/' | sed '/^[Ss]/s/,.*/\/KT/' | sed '/,/s/,.*/\/K/' > $@
 	cat masc.txt | tr " ," "\n\n" | egrep '.' | LC_ALL=C sort -u | sed '/^[aeiouAEIOUàèìòùÀÈÌÒÙáéíóúÁÉÍÓÚ]/s/$$/\/EHKN/' | sed '/^[Ff]/s/$$/\/EK/' | sed '/^[Ss]/s/$$/\/KT/' | sed '/^[^aeiouAEIOUàèìòùÀÈÌÒÙáéíóúÁÉÍÓÚFfSs]/s/$$/\/K/' >> $@ 
 	cat fem.txt | sed '/^[aeiouAEIOUàèìòùÀÈÌÒÙáéíóúÁÉÍÓÚ]/s/,.*/\/EHKN/' | sed '/^[Ff]/s/,.*/\/EK/' | sed '/^[Ss]/s/,.*/\/KT/' | sed '/,/s/,.*/\/K/' >> $@
 	cat fem.txt | tr " ," "\n\n" | egrep '.' | LC_ALL=C sort -u | sed '/^[aeiouAEIOUàèìòùÀÈÌÒÙáéíóúÁÉÍÓÚ]/s/$$/\/EHKN/' | sed '/^[Ff]/s/$$/\/EK/' | sed '/^[Ss]/s/$$/\/KT/' | sed '/^[^aeiouAEIOUàèìòùÀÈÌÒÙáéíóúÁÉÍÓÚFfSs]/s/$$/\/K/' >> $@ 
 	cat adjectives.txt | sed '/^[aeiouAEIOUàèìòùÀÈÌÒÙáéíóúÁÉÍÓÚ]/s/,.*/\/H/' | sed '/,/s/,.*//' >> $@
+	cat names.txt | tr " ," "\n\n" | egrep '.' | LC_ALL=C sort -u | sed '/^[AEIOUÀÈÌÒÙÁÉÍÓÚ]/s/$$/\/HEN/' | sed '/^F/s/$$/\/E/' >> $@ 
 	sed -i '/^àrd\//s/$$/T/; /^ùr\//s/$$/T/; /^ath\//s/$$/T/' $@
 	echo "aonamh/EHT" >> $@
 	echo "ochdamh/EHT" >> $@
