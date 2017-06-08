@@ -50,11 +50,13 @@ scrabble.zip: scrabble.txt
 	zip $@ scrabble.txt
 	cp $@ ${HOME}/public_html/obair
 
+striplist-patterns.txt: striplist.txt
+	cat striplist.txt | sed 's/^.*$$/^&(\/|$$)/' > $@
+
 # sed -i '/\//s/$$/K/; /\//!s/$$/\/K/' $@
 gd_GB.dic : all.txt withflags.txt grave-all.txt grave-withflags.txt
-	cat all.txt withflags.txt grave-all.txt grave-withflags.txt | perl lumpaffixes.pl | LC_ALL=C sort -u > $@
+	cat all.txt withflags.txt grave-all.txt grave-withflags.txt | perl lumpaffixes.pl | LC_ALL=C sort -u | egrep -v -f striplist-patterns.txt > $@
 	cat unlenitables.txt | while read x; do sed -i "s/^\($$x\/.*\)S/\1/" $@; done
-	cat striplist.txt | while read x; do sed -i "/^$$x\//d" $@; done
 	sed -i "1s/.*/`cat gd_GB.dic | wc -l`\n&/" $@
     
 # AFB entries from 2nd field - all inflected forms
@@ -132,6 +134,6 @@ gd_GB-afb-and-dwelly.dic : all.txt withflags.txt dwelly-aff.txt grave-all.txt gr
 
 
 clean:
-	rm -f all.txt withflags.txt grave-all.txt grave-withflags.txt dwelly-aff.txt withflags-justheads.txt missing*.txt gd_GB.dic *.xpi *.oxt *.zip all-old.txt glan.txt gd_GB-dwelly.dic gd_GB-afb.dic scrab-afb-stats.txt adjectives.txt masc.txt fem.txt verb.txt gd_inclusion.txt gd_corpus.txt gd_inclusion-utf8.txt gd_corpus-utf8.txt clann-scrabble.txt gd_GB-scrabble.aff glan-scrabble.txt dwelly-scrabble.txt scrabble.txt scrabble.zip
+	rm -f all.txt withflags.txt grave-all.txt grave-withflags.txt dwelly-aff.txt withflags-justheads.txt missing*.txt gd_GB.dic *.xpi *.oxt *.zip all-old.txt glan.txt gd_GB-dwelly.dic gd_GB-afb.dic scrab-afb-stats.txt adjectives.txt masc.txt fem.txt verb.txt gd_inclusion.txt gd_corpus.txt gd_inclusion-utf8.txt gd_corpus-utf8.txt clann-scrabble.txt gd_GB-scrabble.aff glan-scrabble.txt dwelly-scrabble.txt scrabble.txt scrabble.zip names.txt striplist-patterns.txt
 
 FORCE:
