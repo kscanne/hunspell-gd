@@ -54,7 +54,7 @@ striplist-patterns.txt: striplist.txt
 	cat striplist.txt | sed 's/^.*$$/^&(\/|$$)/' > $@
 
 # sed -i '/\//s/$$/K/; /\//!s/$$/\/K/' $@
-gd_GB.dic : all.txt withflags.txt grave-all.txt grave-withflags.txt
+gd_GB.dic : all.txt withflags.txt grave-all.txt grave-withflags.txt striplist-patterns.txt
 	cat all.txt withflags.txt grave-all.txt grave-withflags.txt | perl lumpaffixes.pl | LC_ALL=C sort -u | egrep -v -f striplist-patterns.txt > $@
 	cat unlenitables.txt | while read x; do sed -i "s/^\($$x\/.*\)S/\1/" $@; done
 	sed -i "1s/.*/`cat gd_GB.dic | wc -l`\n&/" $@
