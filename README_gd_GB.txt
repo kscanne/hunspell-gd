@@ -1,7 +1,7 @@
 
 1. Version
 
-This is version 2.1 of hunspell-gd.
+This is version 3.2 of hunspell-gd.
 
 2. Copyright
 
