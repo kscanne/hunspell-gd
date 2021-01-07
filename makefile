@@ -2,7 +2,7 @@
 VERSION=3.2
 MAKESCRIPT=../make-extensions/make-extensions
 
-all: gd_GB.zip glan.txt
+all: gd_GB.zip
 
 gd_GB.dic gd_GB_2.dic: go.py propernouns.txt semigaelic.txt striplist.txt vspellcheckerexport.csv
 	python3 go.py
