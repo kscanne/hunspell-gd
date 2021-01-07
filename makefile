@@ -1,17 +1,20 @@
 # spell checker version
 VERSION=3.2
 MAKESCRIPT=../make-extensions/make-extensions
-SOURCE=Entries.csv
 
-all: gd_GB.zip glan.txt scrabble.zip
+all: gd_GB.zip glan.txt
 
-# distro of this build package, not of the spell checker
-dist: FORCE
-	rm -f gd.zip
-	zip gd.zip gd_GB.aff makefile README_gd_GB.txt striplist.txt unlenitables.txt lumpaffixes.pl
+gd_GB.dic gd_GB_2.dic: go.py propernouns.txt semigaelic.txt striplist.txt vspellcheckerexport.csv
+	python3 go.py
 
 glan.txt: gd_GB.dic gd_GB.aff unmunch.sh
 	bash unmunch.sh gd_GB.dic gd_GB.aff | LC_ALL=C sort -u > $@
+
+gd_GB.zip gd-GB-dictionary.xpi: gd_GB.dic
+	sed -i "/^This is version.*of hunspell-gd/s/.*/This is version $(VERSION) of hunspell-gd./" README_gd_GB.txt
+	$(MAKESCRIPT) gd_GB 'Scottish Gaelic' 'Scotland' $(VERSION) 'An Dearbhair-litreachaidh Beag'
+
+####### OLD ADAPTXT STUFF #######
 
 adaptxt-gd.zip: gd_inclusion.txt gd_corpus.txt
 	zip $@ gd_inclusion.txt gd_corpus.txt
@@ -25,9 +28,7 @@ gd_inclusion.txt: gd_inclusion-utf8.txt
 gd_inclusion-utf8.txt gd_corpus-utf8.txt: glan.txt toadaptxt.pl gd-freq.txt
 	perl toadaptxt.pl gd glan.txt gd-freq.txt
 
-gd_GB.zip gd-GB-dictionary.xpi: gd_GB.dic
-	sed -i "/^This is version.*of hunspell-gd/s/.*/This is version $(VERSION) of hunspell-gd./" README_gd_GB.txt
-	$(MAKESCRIPT) gd_GB 'Scottish Gaelic' 'Scotland' $(VERSION) 'An Dearbhair-litreachaidh Beag'
+####### OLD SCRABBLE STUFF #######
 
 clann-scrabble.txt: clann.txt striplist.txt
 	LC_ALL=C sort -u clann.txt | keepif -n striplist.txt > $@
@@ -50,11 +51,18 @@ scrabble.zip: scrabble.txt
 	zip $@ scrabble.txt
 	cp $@ ${HOME}/public_html/obair
 
+
+##########################################################################
+####### BELOW HERE IS STUFF FOR OLD PRE-2021 HUNSPELL BUILD SYSTEM #######
+##########################################################################
+
+SOURCE=Entries.csv
+
 striplist-patterns.txt: striplist.txt
 	cat striplist.txt | sed 's/^.*$$/^&(\/|$$)/' > $@
 
 # sed -i '/\//s/$$/K/; /\//!s/$$/\/K/' $@
-gd_GB.dic : all.txt withflags.txt grave-all.txt grave-withflags.txt striplist-patterns.txt
+old_gd_GB.dic : all.txt withflags.txt grave-all.txt grave-withflags.txt striplist-patterns.txt
 	cat all.txt withflags.txt grave-all.txt grave-withflags.txt | perl lumpaffixes.pl | LC_ALL=C sort -u | egrep -v -f striplist-patterns.txt > $@
 	cat unlenitables.txt | while read x; do sed -i "s/^\($$x\/.*\)S/\1/" $@; done
 	sed -i "1s/.*/`cat gd_GB.dic | wc -l`\n&/" $@
