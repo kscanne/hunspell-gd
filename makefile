@@ -7,7 +7,10 @@ all: gd_GB.zip
 gd_GB.dic gd_GB_2.dic: go.py propernouns.txt semigaelic.txt striplist.txt vspellcheckerexport.csv
 	python3 go.py
 
-glan.txt: gd_GB.dic gd_GB.aff unmunch.sh
+glan.txt: gd_GB_2.dic gd_GB.aff unmunch.sh
+	bash unmunch.sh gd_GB_2.dic gd_GB.aff | LC_ALL=C sort -u > $@
+
+glan-goc.txt: gd_GB.dic gd_GB.aff unmunch.sh
 	bash unmunch.sh gd_GB.dic gd_GB.aff | LC_ALL=C sort -u > $@
 
 gd_GB.zip gd-GB-dictionary.xpi: gd_GB.dic
