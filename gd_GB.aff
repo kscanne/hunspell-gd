@@ -372,6 +372,9 @@ PFX S   T     Th          T[^h]
 PFX H Y 1
 PFX H   0     h-          [aeiouáéíóúàèìòùAEIOUÁÉÍÓÚÀÈÌÒÙ]
 
+PFX G N 1
+PFX G   0     h-          [aeiouáéíóúàèìòùAEIOUÁÉÍÓÚÀÈÌÒÙ]
+
 PFX D Y 4
 PFX D   0     d'          [aeiouáéíóúàèìòùAEIOUÁÉÍÓÚÀÈÌÒÙ]
 PFX D   0     d'          [Ff]h

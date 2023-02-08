@@ -26,6 +26,7 @@ def addWords(checker, gocOnly, tostrip):
       aicme = row[4]
       roinn = row[5]
       wordlist = row[1] if gocOnly else row[3]
+      wordInRow = 0
       for w in wordlist.split(', '):
         if ' ' in w or roinn=='NULL' or aicme=='':
           for x in w.split():
@@ -56,7 +57,11 @@ def addWords(checker, gocOnly, tostrip):
             elif w[-5:]=='amaid':
               addWord(checker,w+'-ne')
           elif roinn=='adjective':
-              addWord(checker,w,'K')
+              if wordInRow==0 and isInitialVowel(w):
+                addWord(checker,w,'GK')
+              else:
+                addWord(checker,w,'K')
+        wordInRow += 1
   csvfile.close()
 
 def writeDict(checker, filename):
