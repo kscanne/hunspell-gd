@@ -27,7 +27,8 @@ SET UTF-8
 # 1) '’ have been pushed to the end because they largely appear finally in
 # function words.
 
-TRY ahinresdugctolmbfàAì-òèIùpCDTBSMNGOLEFRPHUÈÌzjZÀÒJykwvÙQWKqVxYX'’⁊0123456789
+
+TRY ahinresdugctolmbfàAì-òèIùpCDTBSMNGOLEFRPHUÈÌzjZÀéóÒJykwvÙÉQWKqVxYXÓ'’⁊0123456789
 
 #This defines character normally handled as punctuation which Hunspell should
 #handles as "letters". Note that while Hunspell obeys this, programs
@@ -63,7 +64,7 @@ BREAK =
 # REP defines replacement rules for combinations which Hunspell would other-
 # wise now suggest, for example bh'ann would not normally suggest bh' ann
 # but settings REP ^bh'a bh'_a makes Hunspell bring up this suggestion
-REP 329
+REP 313
 REP a'n$ a_'n
 REP à'n$ à_'n
 REP e'n$ e_'n
@@ -113,18 +114,24 @@ REP u's$ u_'s
 REP ù's$ ù_'s
 REP ^e-fhein$ e_fhèin
 REP ^e-fhèin e_fhèin
+REP ^e-fhèin e_fhéin
 REP ^i-fhein$ i_fhèin
 REP ^i-fhèin i_fhèin
+REP ^i-fhéin i_fhéin
 REP ^iad-fhein$ iad_fhèin
 REP ^iad-fhèin iad_fhèin
+REP ^iad-fhéin iad_fhéin
 REP ^mi-fhein$ mi_fhèin
 REP ^mi-fhèin mi_fhèin
+REP ^mi-fhéin mi_fhéin
 REP ^mi-fhìn mi_fhìn
 REP ^sinn-fhein$ sinn_fhèin
 REP ^sinn-fhèin sinn_fhèin
+REP ^sinn-fhéin sinn_fhéin
 REP ^sinn-fhìn sinn_fhìn
 REP ^thu-fhein$ thu_fhèin
 REP ^thu-fhèin thu_fhèin
+REP ^thu-fhéin thu_fhéin
 REP ^a'b a'_b
 REP ^a'c a'_c
 REP ^a'd a'_d
@@ -141,11 +148,11 @@ REP ^b'a b'_a
 REP ^b'à b'_à
 REP ^be b'_e
 REP ^b'e b'_e
-REP ^b'é b'_è
+REP ^b'é b'_é
 REP ^b'è b'_è
 REP ^b'fh b'_fh
 REP ^bh'a bh'_a
-REP ^bh'á bh'_à
+REP ^bh'á bh'_á
 REP ^bh'à bh'_à
 REP ^bh'i bh'_i
 REP ^bh'o bh'_o
@@ -153,62 +160,62 @@ REP ^bh'u bh'_u
 REP ^b'i b'_i
 REP ^b'ì b'_ì
 REP ^b'o b'_o
-REP ^b'ó b'_ò
+REP ^b'ó b'_ó
 REP ^b'ò b'_ò
 REP ^b'u b'_u
 REP ^b'ù b'_ù
 REP ^d'a d'_a
 REP ^d'à d'_à
 REP ^d'e d'_e
-REP ^d'é d'_è
+REP ^d'é d'_é
 REP ^d'è d'_è
 REP ^d'fh d'_fh
 REP ^d'i d'_i
 REP ^d'ì d'_ì
 REP ^d'o d'_o
-REP ^d'ó d'_ò
+REP ^d'ó d'_ó
 REP ^d'ò d'_ò
 REP ^d'u d'_u
 REP ^d'ù d'_ù
 REP ^m'a m'_a
 REP ^m'à m'_à
 REP ^m'e m'_e
-REP ^m'é m'_è
+REP ^m'é m'_é
 REP ^m'è m'_è
 REP ^m'fh m'_fh
 REP ^m'i m'_i
 REP ^m'ì m'_ì
 REP ^m'o m'_o
-REP ^m'ó m'_ò
+REP ^m'ó m'_ó
 REP ^m'ò m'_ò
 REP ^m'u m'_u
 REP ^m'ù m'_ù
 REP ^r'a r'_a
 REP ^r'à r'_à
 REP ^r'e r'_e
-REP ^r'é r'_è
+REP ^r'é r'_é
 REP ^r'è r'_è
 REP ^r'i r'_i
 REP ^r'ì r'_ì
 REP ^r'o r'_o
-REP ^r'ó r'_ò
+REP ^r'ó r'_ó
 REP ^r'ò r'_ò
 REP ^r'u r'_u
 REP ^r'ù r'_ù
 REP ^t'a d'_a
 REP ^t'à d'_à
 REP ^t'e d'_e
-REP ^t'é d'_è
+REP ^t'é d'_é
 REP ^t'è d'_è
 REP ^t'i d'_i
 REP ^t'ì d'_ì
 REP ^t'o d'_o
-REP ^t'ó d'_ò
+REP ^t'ó d'_ó
 REP ^t'ò d'_ò
 REP ^t'u d'_u
 REP ^t'ù d'_ù
 REP ^th'a th'_a
-REP ^th'á th'_à
+REP ^th'á th'_á
 REP ^th'à th'_à
 REP ^th'i th'_i
 REP ^th'o th'_o
@@ -221,10 +228,8 @@ REP Cha-n Chan
 REP Cha-n'eil Chan eil
 REP Chan'eil Chan eil
 REP Cèoto Kyōto
-REP Dhi-Mairt Dhimàirt
 REP Dhomhnuill Dhòmhnaill
 REP Dhomhnull Dhòmhnall
-REP Di-Mairt Dimàirt
 REP Domhnull Dòmhnall
 REP Frangais Fraingis
 REP Inbhirnis Inbhir_Nis
@@ -247,12 +252,9 @@ REP an-ath-bhliadhna an_ath-bhliadhna
 REP an-ath-sheachdain an_ath-sheachdain
 REP an-ear an_ear
 REP an-iar an_iar
-REP anseo an_seo
-REP ansin an_sin
-REP ansiud an_siud
-REP an-seo an_seo
-REP an-sin an_sin
-REP an-siud an_siud
+REP anseo an-seo
+REP ansin an-sin
+REP ansiud an-siud
 REP an-toiseach an_toiseach
 REP an-urra an_urra
 REP aon-deug aon_deug
@@ -264,49 +266,33 @@ REP bha'n bha_'n
 REP bhan-rìgh bhànrigh
 REP bhfuil bheil
 REP bhlàr-a-muigh bhlàr_a-muigh
-REP bho'n-dé bhòin-dè
+REP bho'n-dé bhóin-dé
 REP blàr-a-muigh blàr_a-muigh
-REP ceill cèill
+REP ceill céill
 REP ceimeagair ceimigear
 REP ceithear ceithir
 REP ceithir-deug ceithir_deug
 REP ceithreamh ceathramh
 REP ceithrear ceathrar
 REP cha'n'eil chan_eil
+REP cha-mhór cha_mhór
 REP cha-mhòr cha_mhòr
 REP cha-n chan
 REP cha-n'eil chan eil
 REP chaid chaidh
 REP chan'eil chan eil
-REP cheill chèill
+REP cheill chéill
 REP cheimeagair cheimigear
 REP cheithear cheithir
 REP cheithreamh cheathramh
 REP cheithrear cheathrar
 REP chionns chionn_'s
-REP choir-eigin coireigin
-REP chàch-a-chèile chàch_a_chèile
+REP chàch-a-chéile chàch_a_chéile
 REP cruinn-còmhla cruinn_còmhla
-REP càch-a-chèile càch_a_chèile
-REP còig-deug còig_deug
-REP d'thainig tàinig
-REP d'thàinig tàinig
-REP d'thig tig
-REP d'thigeadh tigeadh
-REP d'thigeamaid tigeamaid
-REP d'thiginn tiginn
-REP d'thoireadh toireadh
-REP d'thoireamaid toireamaid
-REP d'thoirear toirear
-REP d'thoirinn toirinn
-REP d'thubhairt tuirt
-REP d'thug tug
-REP d'thugadh tugadh
-REP d'thugar tugar
-REP d'thuirt tuirt
+REP càch-a-chéile càch_a_chéile
+REP cóig-deug cóig_deug
+REP d'thainig d'thàinig
 REP dh'aoite dh'fhaoidte
-REP dhomh-sa dhòmhsa
-REP dhuit-sa dhut-sa
 REP dol-an-sàs dol_an_sàs
 REP dol-seachad dol_seachad
 REP dà-dheug dà_dheug
@@ -347,10 +333,10 @@ REP nacli nach
 REP naoi-deug naoi_deug
 REP naoidh-deug naoidh_deug
 REP ochd-deug ochd_deug
-REP p-fhèin pèin
-REP p-fhéin pèin
-REP p-fèin pèin
-REP p-féin pèin
+REP p-fhèin péin
+REP p-fhéin péin
+REP p-fèin péin
+REP p-féin péin
 REP polais poilis
 REP raibh robh
 REP ri'm ri_m'
@@ -364,13 +350,12 @@ REP sgàths sgàth_'s
 REP sia-deug sia_deug
 REP smait 's_mathaid
 REP sprèadh spreadhadh
-REP srathspè srath_spè
+REP srathspè srath_spé
 REP strìth strì
 REP t-Samhuinn t-Samhain
 REP t-Stròim t-Sròim
 REP t-foghar t-fhoghar
 REP t-oghar t-fhoghar
-REP t-Hogh Togh
 REP t-srì strì
 REP t-strì strì
 REP taobh-a-muigh taobh_a-muigh
@@ -387,7 +372,7 @@ REP triur triùir
 REP trì-deug trì_deug
 REP tànaig tàinig
 REP uair-is-uair uair_is_uair
-REP uile-gu-lèir uile_gu_lèir
+REP uile-gu-léir uile_gu_léir
 REP Òg-mhìos Ògmhios
 REP àireamh-fòn àireamh_fòn
 REP àmanan amannan
